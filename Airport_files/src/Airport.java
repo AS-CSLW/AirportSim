@@ -22,7 +22,7 @@ public class Airport implements EventHandler {
     private double m_totalCirclingTime = 0;
     private String m_airportName;
     private double m_rangeLeft;
-
+    private int delayTime;
     public Airport(String name, double runwayTimeToLand, double requiredTimeOnGround, Coordinator coordinator) {
         m_airportName = name;
         m_coordinator = coordinator;
@@ -49,7 +49,7 @@ public class Airport implements EventHandler {
         AirportEvent airEvent = (AirportEvent)event;
         // Get the sender of the event (sender is an airplane)
         Airplane airplane = airEvent.getAirplane();
-
+        
         // Three type of event available here : PLANE_ARRIVES, PLANE_DEPARTS, PLANE_LANDED
         // Each event will be executed with a delay :
         // Delay of PLANE_ARRIVES is m_runwayTimeToLand which means after arrival, airplane should take time to land
@@ -86,12 +86,11 @@ public class Airport implements EventHandler {
                 m_arrivalTimes.put(airplane, getCurrentTime());
 
 
-
                 System.out.println(getCurrentTime() + " : " + airplane.getName() + " arrived at " + m_airportName);
 
                 // if there is not other airplane in the landing queue, we add the PLANE_LANDED event into the event list
                 if(m_landingQueue.size() == 1) {
-                    AirportEvent landedEvent = new AirportEvent(m_runwayTimeToLand, this, AirportEvent.PLANE_LANDED, airplane);
+                    AirportEvent landedEvent = new AirportEvent(m_runwayTimeToLand+delayTimeGenerator.delayTimeGenerators(getCurrentTime(), m_airportName), this, AirportEvent.PLANE_LANDED, airplane);
                     Simulator.schedule(landedEvent);
                 }
 
@@ -105,7 +104,7 @@ public class Airport implements EventHandler {
             case AirportEvent.PLANE_LANDED:
                 System.out.println(getCurrentTime() + " : " + airplane.getName() + " landed at airport " + m_airportName);
                 // Flight will depart in m_requiredTimeOnGround time, so PLANE_DEPARTS event is added into the event list
-                AirportEvent departureEvent = new AirportEvent(m_requiredTimeOnGround, this, AirportEvent.PLANE_DEPARTS, airplane);
+                AirportEvent departureEvent = new AirportEvent(m_requiredTimeOnGround+delayTimeGenerator.delayTimeGenerators(getCurrentTime(), m_airportName), this, AirportEvent.PLANE_DEPARTS, airplane);
                 Simulator.schedule(departureEvent);
                 // Calculate circling time = landed time - arrival time - time spent on the runway
                 m_totalCirclingTime += (getCurrentTime() - m_arrivalTimes.get(airplane) - m_runwayTimeToLand);
@@ -118,7 +117,7 @@ public class Airport implements EventHandler {
                 if(m_landingQueue.size() > 0)
                 {
                     Airplane nextPlane = m_landingQueue.peek();
-                    AirportEvent landingEvent = new AirportEvent(m_runwayTimeToLand, this, AirportEvent.PLANE_LANDED, nextPlane);
+                    AirportEvent landingEvent = new AirportEvent(m_runwayTimeToLand+delayTimeGenerator.delayTimeGenerators(getCurrentTime(), m_airportName), this, AirportEvent.PLANE_LANDED, nextPlane);
                     Simulator.schedule(landingEvent);
                 }
 
