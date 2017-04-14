@@ -68,6 +68,7 @@ public class DrawMap {
 			
 			StdDraw.clear();
 			StdDraw.picture(0.5,0.5 , "./Airport_files/resource/projection.png",1,1);
+			StdDraw.text(0.9, 0.9,Integer.toString((int)currentTime));
 			StdDraw.setPenRadius(0.01);
 			StdDraw.setPenColor(StdDraw.BLUE);
 			//draw airport, use the list we get.
@@ -86,6 +87,7 @@ public class DrawMap {
 
 	}
 	
+	/*
 	public static void main(String[] args) {
 		//test class for DrawMap
 		List<Airport> m_listOfAirport = new ArrayList<Airport>(Arrays.asList(
@@ -102,6 +104,7 @@ public class DrawMap {
 			e.printStackTrace();
 		}
 	}
+	*/
 	
 	private static class position {
 		public double x = 0;

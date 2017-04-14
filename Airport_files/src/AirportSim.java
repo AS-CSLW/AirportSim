@@ -9,7 +9,7 @@ import java.io.UnsupportedEncodingException;
 
 public class AirportSim {
     // Modify these Constants to realize different simulation
-    private static final int numberOfAirplane = 50;
+    private static final int numberOfAirplane = 100;
     private static final int simulationTime = 100;
     private static final int maxNumberOfPassengers = 500;
     private static final int minNumberOfPassengers = 36;
@@ -18,7 +18,7 @@ public class AirportSim {
     // maximum airplane range. in this simulation we use Boeing 787-8 as the model and it has the largest range in 787 family: 14140 km.
     private static final int maxAirplaneRange = 14140;
     
-    private static final String flightRecordFile = "./Airport_files/resource/flights.txt";
+    private static final String flightRecordFile = "flights.txt";
     public static PrintWriter recordWriter= null;
 
 
