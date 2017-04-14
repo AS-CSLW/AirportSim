@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="Airport_files/src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="lib" path="Airport_files/src/javax.json-1.0.jar"/>
+	<classpathentry kind="output" path="Airport_files/out/production/Airport"/>
+</classpath>
